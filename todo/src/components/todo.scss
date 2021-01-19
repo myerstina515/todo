@@ -33,7 +33,7 @@ body, html {
 
       display:flex;
       flex-direction:column;
-      margin-right: 2em;
+      margin-right: 5em;
 
       label {
           display: flex;
@@ -91,4 +91,17 @@ body, html {
       }
   }
 
+}
+.list-group{
+  margin-left: 2em;
+  width: 250px;
+  span{
+    margin-left: 40px;
+  }
+}
+#container{
+  background-color: lightgrey;
+  height: 40px;
+  padding-top: 8px;
+  border-top: 10px;
 }

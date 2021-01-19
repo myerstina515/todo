@@ -1,73 +1,68 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import './todo.scss';
 
-class ToDo extends React.Component {
+function ToDo(props) {
+  const [list, setList] = useState([
+    { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A' },
+    { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A' },
+    { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B' },
+    { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C' },
+    { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B' },
+  ]);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-    };
-  }
+  const [count, setCount] = useState();
 
-  addItem = (item) => {
+  useEffect(() => {
+    setCount(list.filter(item => !item.complete).length)
+  }, [list]);
+
+  const addItem = (item) => {
     item._id = Math.random();
     item.complete = false;
-    this.setState({ list: [...this.state.list, item]});
+    setList([...list, item]);
   };
 
-  toggleComplete = id => {
-
-    let item = this.state.list.filter(i => i._id === id)[0] || {};
+  const toggleComplete = id => {
+    let item = list.filter(i => i._id === id)[0] || {};
 
     if (item._id) {
       item.complete = !item.complete;
-      let list = this.state.list.map(listItem => listItem._id === item._id ? item : listItem);
-      this.setState({list});
+      // let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
+      setList(list.map(listItem => listItem._id === item._id ? item : listItem));
     }
-
   };
 
-  componentDidMount() {
-    let list = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B'},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C'},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
-    ];
+  return (
+    <div>
+      
+      <Container fluid id="container">
+        <Row>
+          <Col>There are {count} Items To Complete</Col>
+        </Row>
+      </Container>
 
-    this.setState({list});
-  }
+      <section className="todo">
 
-  render() {
-    return (
-      <>
-        <header>
-          <h2>
-          There are {this.state.list.filter(item => !item.complete).length} Items To Complete
-          </h2>
-        </header>
+        <div>
+          <TodoForm handleSubmit={addItem} />
+        </div>
 
-        <section className="todo">
-
-          <div>
-            <TodoForm handleSubmit={this.addItem} />
-          </div>
-
-          <div>
-            <TodoList
-              list={this.state.list}
-              handleComplete={this.toggleComplete}
-            />
-          </div>
-        </section>
-      </>
-    );
-  }
+        <div>
+          <TodoList
+            list={list}
+            handleComplete={toggleComplete}
+          />
+        </div>
+      </section>
+    </div>
+  );
 }
+
 
 export default ToDo;
