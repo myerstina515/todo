@@ -6,7 +6,7 @@ console.log('this is props', props.list);
     return (
       <ListGroup>
         {props.list.map(item => (
-          <ListGroup.Item action variant={item.complete ? "success" : "danger"} className={`complete-${item.complete.toString()}`}
+          <ListGroup.Item data-testid="list-item" action variant={item.complete ? "success" : "danger"} className={`complete-${item.complete.toString()}`}
           key={item._id}>
             <span onClick={() => props.handleComplete(item._id)}>
               {item.text}
