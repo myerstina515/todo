@@ -6,6 +6,7 @@
 
 ![uml](./src/assets/todoDay1.png)
 ![day2](./src/assets/day2.png)
+![day3](./src/assets/lab33-uml.png)
 
 ### Deployed link/PR
 
