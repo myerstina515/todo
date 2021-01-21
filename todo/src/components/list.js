@@ -1,25 +1,32 @@
 import React, { useState, useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Badge from 'react-bootstrap/Badge';
-import Pagination from 'react-js-pagination';
+// import Pagination from 'react-js-pagination';
 import { AppSettingsContext } from '../context/settings/context';
 import useAjaxCalls from './hooks/ajax';
 import { SettingsContext } from '../context/settings/settings';
 
+
 function TodoList(props) {
   const settings = useContext(SettingsContext);
   const [URL, list, setList, addItem] = useAjaxCalls();
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   const appSettingsContext = useContext(AppSettingsContext);
 
-  const list2 = props.list.filter(item =>
-    settings.showCompleted ? true : !item.complete
-  );
-  const start = settings.maxVisible * page || 0;
-  const end = start + settings.maxVisible || list.length;
-  const pages = new Array(Math.ceil(list.length / settings.maxVisible)).fill(
-    ''
-  );
+  // const list2 = props.list.filter(item =>
+  //   settings.showCompleted ? true : !item.complete
+  // );
+  const [currentPage, setCurrentPage] = useState(0);
+  // const [resultsPerPage, setResultsPerPage] = useState(3);
+  // const start = settings.maxVisible * page || 0;
+  // const end = start + settings.maxVisible || list.length;
+  // const pages = new Array(Math.ceil(list.length / settings.maxVisible)).fill(
+    // ''
+  // );
+
+  const page = props.list.slice((settings.maxVisible * currentPage), (settings.maxVisible * (currentPage + 1)))
+// Page 1= Lower limit (settings.maxVisible * (currentPage) = 0)
+// Page 2 = (settings.maxVisible * (currentPage) = 3)
 
   const updateSortMethod = e => {
     e.preventDefault();
@@ -51,10 +58,19 @@ function TodoList(props) {
     }
   };
 
+  const nextPage = e => {
+    setCurrentPage(currentPage + 1);
+  }
+
+  const previousPage = e => {
+    setCurrentPage(currentPage -1);
+  }
+
   return (
     <div>
       <p>Here is the show completed field {appSettingsContext.showCompleted}</p>
       <label for="sort">Choose a sort method:</label>
+      {/* create a form, use radio buttons? set radio buttons to onChange, the form to onSubmit. onChange, we set the state before we submit */}
       <button onClick={updateSortMethod} value="difficulty">
         Difficulty
       </button>
@@ -70,7 +86,7 @@ function TodoList(props) {
         </button>
       </div>
 
-      {props.list.map(item => (
+      {page.map(item => (
         <Modal.Dialog>
           <Modal.Header
             closeButton
@@ -99,13 +115,8 @@ function TodoList(props) {
           </Modal.Body>
         </Modal.Dialog>
       ))}
-      <Pagination>
-        {pages.map((n, i) => (
-          <Pagination.Item key={i + 1} onClick={() => setPage(i)}>
-            {i + 1}
-          </Pagination.Item>
-        ))}
-      </Pagination>
+      <button onClick={nextPage}>Next Page</button>
+      <button onClick={previousPage}>Previous Page</button>
     </div>
   );
 }
