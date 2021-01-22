@@ -1,4 +1,4 @@
-# ToDo App (day 2 of build)
+# ToDo App (day 4 of build)
 
 ## Student: Tina Myers, Sara Strasner, Stacy Burris
 
@@ -7,11 +7,12 @@
 ![uml](./src/assets/todoDay1.png)
 ![day2](./src/assets/day2.png)
 ![day3](./src/assets/lab33-uml.png)
+![day4](./src/assets/class34-uml.png)
 
 ### Deployed link/PR
 
 [Deployment](https://codesandbox.io/s/nice-panini-24dmv)
-[last PR](https://github.com/myerstina515/todo/pull/2)
+[last PR](https://github.com/myerstina515/todo/pull/8)
 
 ## Getting Started with Create React App
 
