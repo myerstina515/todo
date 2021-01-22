@@ -10,6 +10,8 @@
     "bootstrap": "^4.5.3",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
+    "jsonwebtoken": "8.5.1",
+    "react-cookies": "0.1.1",
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-dom": "^17.0.1",
